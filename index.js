@@ -9,6 +9,7 @@ app.set('view engine', 'ejs');
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const file_directory = path.join(__dirname, 'files/');
 
