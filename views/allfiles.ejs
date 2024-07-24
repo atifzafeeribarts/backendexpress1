@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Files</title>
+</head>
+
+<body>
+    <h1>All Files</h1>
+    <div>
+        <div>
+            <% for(var i=0; i<allfiles.length; i++) { %>
+                <div>
+                    <label data-filename="<%= allfiles[i].filename %>">
+                        <%= allfiles[i].filename %>
+                    </label>
+                    <textarea name="" id="file" placeholder=""><%= allfiles[i].data %></textarea>
+                    <button class="update">Update</button>
+                </div>
+                <% } %>
+        </div>
+    </div>
+    <script>
+        let allupdatebutton = [...document.querySelectorAll(".update")];
+        allupdatebutton.forEach((button_elem) => {
+            button_elem.addEventListener("click", async () => {
+                const filename = button_elem.parentNode.querySelector("[data-filename]").dataset.filename;
+                const content = button_elem.parentNode.querySelector("textarea").value;
+                data = {
+                    filename: filename,
+                    content: content
+                };
+                try {
+                    const response = await fetch(`/updatefile`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    console.log('File updated successfully:');
+                } catch (error) {
+                    console.error('Error:', error.message);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

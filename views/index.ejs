@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express</title>
+</head>
+
+<body>
+    <h1>Create a file</h1>
+    <form  id="fileForm">
+        <label for="filename">Filename:</label>
+        <input type="text" id="filename" name="filename">
+        <br>
+        <label for="content">Content:</label>
+        <textarea name="content" id="content"></textarea>
+        <button type="submit">Create File</button>
+        <div>
+            <a href="/allfiles">All Files</a>
+
+        </div>
+    </form>
+    <script>
+        async function senddata(event) {
+      event.preventDefault();
+      const filename = document.getElementById('filename').value;
+      const content = document.getElementById('content').value;
+
+      const data = {
+        filename: filename,
+        content: content
+      };
+
+      try {
+        const response = await fetch('/createfile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('File created successfully:', result);
+        document.getElementById('fileForm').reset();
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    }
+
+    document.getElementById('fileForm').addEventListener('submit', senddata);
+    </script>
+</body>
+
+</html>
