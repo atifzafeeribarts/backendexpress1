@@ -5,19 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Files</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-    <h1>All Files</h1>
+    <h1 class="text-3xl font-bold underline">All Files</h1>
     <div>
-        <div>
+        <div class="flex flex-wrap gap-4">
             <% for(var i=0; i<allfiles.length; i++) { %>
-                <div>
+                <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex flex-col gap-4 ">
                     <label data-filename="<%= allfiles[i].filename %>">
                         <%= allfiles[i].filename %>
                     </label>
                     <textarea name="" id="file" placeholder=""><%= allfiles[i].data %></textarea>
-                    <button class="update">Update</button>
+                    <button class="update inline items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
                 </div>
                 <% } %>
         </div>
